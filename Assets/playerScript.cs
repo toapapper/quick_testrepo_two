@@ -17,6 +17,7 @@ public class playerScript : MonoBehaviour
     /// </summary>
     public float playerTurnSpeed = 10f;
     public float playerTurnAcceleration = 30f;
+    public float playerTurnSlowDownMultiplier = .3f;
     public float playerSlowSpeed = 10f;
     float currentTurnVelocity = 0;
 
@@ -122,7 +123,7 @@ public class playerScript : MonoBehaviour
 
             //Absoluteify
             float tempVelocity = Mathf.Abs(currentTurnVelocity);
-            tempVelocity -= playerTurnAcceleration * Time.deltaTime;
+            tempVelocity -= playerTurnAcceleration * Time.deltaTime * playerTurnSlowDownMultiplier;
             if(tempVelocity <= 0)
             {
                 tempVelocity = 0;
