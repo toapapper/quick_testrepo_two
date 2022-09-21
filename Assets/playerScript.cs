@@ -12,6 +12,9 @@ public class playerScript : MonoBehaviour
     float playerFwdSpeed = 15f;
     public float playerFwdAcceleration = 3f;//per second
 
+    public Vector3 playerDuckScale = new Vector3(1, .35f, 1);
+    private Vector3 playerOriginalScale = Vector3.one;
+
     /// <summary>
     /// Max right/left speed
     /// </summary>
@@ -44,6 +47,7 @@ public class playerScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerFwdSpeed = playerStartSpeed;
         startPos = transform.position;
+        playerOriginalScale = transform.localScale;
     }
 
     // Update is called once per frame
@@ -145,14 +149,15 @@ public class playerScript : MonoBehaviour
     private void Duck()
     {
         duckTimer = duckDuration;
-        transform.localScale = new Vector3(1, .5f, 1);
+        transform.localScale = playerDuckScale;
     }
 
     private void StopDuck()
     {
         duckTimer = 0;
-        transform.localScale = new Vector3(1, 1.5f, 1);
-        transform.position = transform.position + transform.up * 0.35f;
+        transform.localScale = playerOriginalScale;
+        float height = (playerOriginalScale.y - playerDuckScale.y) / 2;
+        transform.position = transform.position + transform.up * height;
     }
 
     private void Slow()
